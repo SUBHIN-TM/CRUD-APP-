@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table</title>
+    <style>
+         table,th,tr,td{
+            border-collapse: collapse;
+            border: 3px solid rgb(162, 159, 159);
+            padding: 10px;
+        }
+        th,tr{
+            padding: 27px;
+        }
+        .homeBtn{
+            margin-left: 1232px;
+            margin-top: 20px;
+            padding: 10px 20px;
+        }
+        
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+        <tr>
+           <th>Booking Id</th>
+           <th>First Name </th>
+           <th>Last Name</th>
+           <th>Moble Number</th>
+           <th>Email ID</th>
+           <th>Model Name</th>
+           <th>Service Type</th>
+           <th>Choosen Date</th>
+           <th>Action</th>
+
+        </tr>
+    </thead>
+    <tbody id="userData"></tbody>
+
+    </table>
+    <button class="homeBtn" onclick="home()" >HOME</button>
+
+    <script>
+        fetch('userData',{
+            method :'GET'
+        })
+        .then(response => response.json())//BODY CONTAIN json it read as js OBJECT NOW
+        .then(data => {
+            const userDataTable=document.querySelector("#userData");
+
+            data.forEach(object => { //DATA CONTAIN WHOLE DATA ADN OBJECT AS EACH OBJECT NOW W CAN SELECT OBJECT. TO INSEIDE PROPERTIES
+                const newRowCreated=document.createElement('tr');
+                newRowCreated.innerHTML=
+                `
+                <td>${object.id}</td>
+                <td>${object.firstName}</td>
+                <td>${object.lastName}</td>
+                <td>${object.mobileNumber}</td>
+                <td>${object.emailId}</td>
+                <td>${object.modelName}</td>
+                <td>${object.serviceType}</td>
+                <td>${object.chooseDate}</td>
+
+                <td><button onclick="modifyUser(${object.id})">MODIFY</button>
+                    <button onclick="deleteUser(${object.id})" >DELETE</button>
+                    </td>
+                `;
+                userDataTable.appendChild(newRowCreated)
+                
+            });
+
+
+        })
+
+        .catch(error => console.error("error in geting the data"))
+
+
+
+
+  
+
+
+
+//FUNCTION FOR MODIFY
+            function modifyUser(userId) {
+
+    // USING PROMPT TO MODIFY
+    let updatedFirstName ;
+    do {
+        updatedFirstName = prompt('Enter updated First Name (at least 3 letters):');
+       
+    } while (updatedFirstName.length < 2); //LOOP WILL WORK WHENEVER LENGTH LESSTHAN 2
+
+    let updatedLastName;
+    do{
+        updatedLastName=prompt('Enter updated Last Name: ')
+       
+    } while(updatedLastName.length === 0 ) //LOOP WILL WORK WHENEVER FIELD = 0
+
+    let updatedMobileNumber;
+    do{
+        updatedMobileNumber=prompt(`Enter updated Mobile Number (10 digits):`)
+        
+    } while(updatedMobileNumber.length !=10 || isNaN(updatedMobileNumber))
+
+    let updatedEmailId;
+    let emailCheck= /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    do{
+        updatedEmailId=prompt(`Enter updated Email Id:`)
+    }while(!emailCheck.test(updatedEmailId))
+
+    let updatedModelName ;
+    let validateModel=[ "CLASSIC 350" ,"STANDARD 350" ,"METEOR 350 " ,"THUNDER BIRD 350" , "HIMALAYAN"]
+    do{
+        updatedModelName=prompt('Enter updated Model Name: \n CLASSIC 350 \n STANDARD 350 \n METEOR 350 \n THUNDER BIRD 350 \n HIMALAYAN ')
+    }while(!validateModel.includes(updatedModelName.toUpperCase()))
+
+    let updatedServiceType;
+    let validateType=["FREE SERVICE","PAID SERVICE"]
+    do{
+        updatedServiceType=prompt('Enter updated Service Type: \n FREE SERVICE \n PAID SERVICE ')
+    }while(!validateType.includes(updatedServiceType.toUpperCase()))
+
+    let updatedChooseDate;
+    let validDate=/^\d{4}-\d{2}-\d{2}$/
+    do{
+        updatedChooseDate=prompt('Enter updated Choose Date: \n "YYYY-MM-DD" ')
+    }while(!validDate.test(updatedChooseDate))
+
+
+    // CREATED NEW OBJECT TO SEND TO SERVER TO REPLACE OR MODIFY
+    const updatedUserData = {
+        id: userId,
+        firstName: updatedFirstName.toUpperCase(),
+        lastName: updatedLastName.toUpperCase(),
+        mobileNumber: updatedMobileNumber,
+        emailId: updatedEmailId,
+        modelName: updatedModelName.toUpperCase(),
+        serviceType: updatedServiceType.toUpperCase(),
+        chooseDate: updatedChooseDate,
+    };
+
+    //SEND PUT REQUEST TO URL /MODIFYUSER
+    fetch(`/modifyUser/${userId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedUserData),//CONVERTED TO JSON FORMAT
+    })
+    .then(response => { //NOW DATA MODIFIED AND SERVER GIVE THE RESPONSE
+        if (response.status === 200) {
+            console.log('User data updated successfully.');
+            alert("USER DATA MODIFIED")
+            window.location.href='/tableView'//JUST RELOADED THE TABLE PAGE
+            
+        } else {
+            console.log('Error updating user data:', response.status, response.statusText);
+        }
+    });
+}
+
+
+            
+
+    //DELETING FUNCTION
+        function deleteUser(userId) {
+            fetch('/deleteUser/' + userId,{//PASSED ID NUMBER IN DELETE METHORD,WE CAN ALSO PASS ID LIKE THIS
+            method:'DELETE'      
+
+            })
+            .then(response => {
+                if(response.status==200){
+                    alert("User Details Successfully DELETED")
+                      window.location.href='/tableView'
+                }else {
+                    console.log("error to delete,bad response");
+                }
+                
+            })
+            
+        }
+
+        function home() { //ADDED A BUTTON TO GO HOME
+            window.location.href='/'
+            
+        }
+
+    </script>
+
+
+
+
+
+</body>
+</html>
+
