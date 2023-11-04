@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "id": 1,
+    "firstName": "SUBHIN",
+    "lastName": "HR",
+    "mobileNumber": "9747247460",
+    "emailId": "subhintm95@outlook.com",
+    "modelName": "CLASSIC 350",
+    "serviceType": "FREE SERVICE",
+    "chooseDate": "2023-11-14"
+  }
+]

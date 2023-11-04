@@ -1,191 +1,300 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Table</title>
     <style>
-         table,th,tr,td{
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+
+        table,
+        th,
+        tr,
+        td {
             border-collapse: collapse;
             border: 3px solid rgb(162, 159, 159);
             padding: 10px;
+            margin-top: 15px;
+            margin-left: 15px;
+            margin-right: 15px;
+
         }
-        th,tr{
+
+        table{
+            width: 73%;
+        }
+
+        th,
+        tr {
             padding: 27px;
         }
-        .homeBtn{
-            margin-left: 1232px;
+
+        .homeBtn {
+            margin-left: 1035px;
             margin-top: 20px;
             padding: 10px 20px;
         }
+
+        .body {
+            width: 100%;
+            height: 600px;
+            border: 1px solid red;
+            background-color: beige;
+            position: absolute;
+            top: 0;
+            display: none;
+        }
+
+        small {
+            margin-left: 122px
+        }
+
+        .edit {
+            position: absolute;
+            top: 1px;
+            right: 46px;
+            border: 1px solid black;
+            background-color: cornsilk;
+            padding: 24px;
+            margin-top: 15px;
+        }
+
+        #submitEdit {
+            padding: 12px;
+            margin-left: 117px;
+            margin-top:15px;
+        }
+        #cancel{
+            padding: 5px;
+        }
+
         
     </style>
 </head>
+
 <body>
     <table>
         <thead>
-        <tr>
-           <th>Booking Id</th>
-           <th>First Name </th>
-           <th>Last Name</th>
-           <th>Moble Number</th>
-           <th>Email ID</th>
-           <th>Model Name</th>
-           <th>Service Type</th>
-           <th>Choosen Date</th>
-           <th>Action</th>
+            <tr>
+                <th class="first-column ">Id</th>
+                <th>First Name </th>
+                <th>Last Name</th>
+                <th>Moble Number</th>
+                <th>Email ID</th>
+                <th>Model Name</th>
+                <th>Service Type</th>
+                <th>Choosen Date</th>
+                <th>Action</th>
 
-        </tr>
-    </thead>
-    <tbody id="userData"></tbody>
+            </tr>
+        </thead>
+        <tbody id="userData"></tbody>
 
     </table>
-    <button class="homeBtn" onclick="home()" >HOME</button>
+    <button class="homeBtn" onclick="home()">HOME</button>
+    
+    <div class="edit" style="display: none;">
+        <label style="margin-right: 45px;" for="">First Name</label>
+        <input type="text" name="" id="FIRSTNAME">
+        <br><small id="firstNameError" style="color: red; "></small> <br>
+        <label style="margin-right: 52px;" for="">last Name</label>
+        <input type="text" name="" id="LASTNAME">
+        <br><small id="lastNameError" style="color: red;"></small> <br>
+        <label style="margin-right: 13px;" for="">Mobile Number</label>
+        <input type="number" name="" id="NUMBER">
+        <br><small id="mobileNumberError" style="color: red;"></small><br>
+        <label style="margin-right: 60px;" for="">Email Id</label>
+        <input type="email" name="" id="MAIL">
+        <br><small id="emailError" style="color: red;"></small><br>
+        <label style="margin-right: 31px;" for="">Model Name</label>
+        <select name="modelName" id="MODELNAME">
+            <option value="CLASSIC 350">CLASSIC 350</option>
+            <option value="STANDARD 350">STANDARD 350</option>
+            <option value="METEOR 350">METEOR 350</option>
+            <option value="THUNDER BIRD 350">THUNDER BIRD 350</option>
+            <option value="HIMALAYAN">HIMALAYAN</option>
+        </select>
+        <!-- <input type="text" name="" id="MODELNAME"> <br><br> -->
+        <br><br> <label style="margin-right: 31px;" for="">Service Type</label>
+        <select name="serviceType" id="TYPE"><br>
+            <option value="FREE SERVICE">FREE SERVICE</option>
+            <option value="PAID SERVICE">PAID SERVICE</option>
+        </select>
+        <!-- <input type="text" name="" id="TYPE"> <br><br> -->
+        <br> <br><label style="margin-right: 32px;" for="">Choose Date</label>
+        <input type="date" name="" id="DATE">
+        <br><small id="chooseDateError" style="color: red;"></small>
+        <br><button id="submitEdit">SUBMIT</button>
+        <br><button onclick="window.location.href='./tableView'"  id="cancel">CANCEL</button>
+
+
+    </div>
+
+
+
 
     <script>
-        fetch('userData',{
-            method :'GET'
+        fetch('userData', {
+            method: 'GET'
         })
-        .then(response => response.json())//BODY CONTAIN json it read as js OBJECT NOW
-        .then(data => {
-            const userDataTable=document.querySelector("#userData");
+            .then(response => response.json())//BODY CONTAIN json it read as js OBJECT NOW
+            .then(data => {
+                const userDataTable = document.querySelector("#userData");
 
-            data.forEach(object => { //DATA CONTAIN WHOLE DATA ADN OBJECT AS EACH OBJECT NOW W CAN SELECT OBJECT. TO INSEIDE PROPERTIES
-                const newRowCreated=document.createElement('tr');
-                newRowCreated.innerHTML=
-                `
-                <td>${object.id}</td>
-                <td>${object.firstName}</td>
-                <td>${object.lastName}</td>
-                <td>${object.mobileNumber}</td>
-                <td>${object.emailId}</td>
-                <td>${object.modelName}</td>
-                <td>${object.serviceType}</td>
-                <td>${object.chooseDate}</td>
+                data.forEach(object => { //DATA CONTAIN WHOLE DATA ADN OBJECT AS EACH OBJECT NOW W CAN SELECT OBJECT. TO INSEIDE PROPERTIES
+                    const newRowCreated = document.createElement('tr');
+                    newRowCreated.innerHTML =
+                        `
+                <td >${object.id}</td>
+                <td class="fname" >${object.firstName}</td>
+                <td class="lname">${object.lastName}</td>
+                <td class="mnumber">${object.mobileNumber}</td>
+                <td class="mail">${object.emailId}</td>
+                <td class="model">${object.modelName}</td>
+                <td class="service">${object.serviceType}</td>
+                <td class="dateTaken">${object.chooseDate}</td>
 
-                <td><button onclick="modifyUser(${object.id})">MODIFY</button>
-                    <button onclick="deleteUser(${object.id})" >DELETE</button>
+                <td><button style="padding: 4px; margin-left: 24px;" onclick="modifyUser(${object.id})">MODIFY</button>
+                    <button style="margin-top:10px;padding: 4px;margin-left: 24px" onclick="deleteUser(${object.id})" >DELETE</button>
                     </td>
                 `;
-                userDataTable.appendChild(newRowCreated)
-                
-            });
+                    userDataTable.appendChild(newRowCreated)
 
+                    const test = document.createElement("div");
+                    test.className = "body"
+                    test.innerHTML = `<h1>hello ${object.id}</h1>`
+                    document.body.appendChild(test)
 
-        })
+                });
 
-        .catch(error => console.error("error in geting the data"))
-
-
-
-
-  
-
-
-
-//FUNCTION FOR MODIFY
-            function modifyUser(userId) {
-
-    // USING PROMPT TO MODIFY
-    let updatedFirstName ;
-    do {
-        updatedFirstName = prompt('Enter updated First Name (at least 3 letters):');
-       
-    } while (updatedFirstName.length < 2); //LOOP WILL WORK WHENEVER LENGTH LESSTHAN 2
-
-    let updatedLastName;
-    do{
-        updatedLastName=prompt('Enter updated Last Name: ')
-       
-    } while(updatedLastName.length === 0 ) //LOOP WILL WORK WHENEVER FIELD = 0
-
-    let updatedMobileNumber;
-    do{
-        updatedMobileNumber=prompt(`Enter updated Mobile Number (10 digits):`)
-        
-    } while(updatedMobileNumber.length !=10 || isNaN(updatedMobileNumber))
-
-    let updatedEmailId;
-    let emailCheck= /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    do{
-        updatedEmailId=prompt(`Enter updated Email Id:`)
-    }while(!emailCheck.test(updatedEmailId))
-
-    let updatedModelName ;
-    let validateModel=[ "CLASSIC 350" ,"STANDARD 350" ,"METEOR 350 " ,"THUNDER BIRD 350" , "HIMALAYAN"]
-    do{
-        updatedModelName=prompt('Enter updated Model Name: \n CLASSIC 350 \n STANDARD 350 \n METEOR 350 \n THUNDER BIRD 350 \n HIMALAYAN ')
-    }while(!validateModel.includes(updatedModelName.toUpperCase()))
-
-    let updatedServiceType;
-    let validateType=["FREE SERVICE","PAID SERVICE"]
-    do{
-        updatedServiceType=prompt('Enter updated Service Type: \n FREE SERVICE \n PAID SERVICE ')
-    }while(!validateType.includes(updatedServiceType.toUpperCase()))
-
-    let updatedChooseDate;
-    let validDate=/^\d{4}-\d{2}-\d{2}$/
-    do{
-        updatedChooseDate=prompt('Enter updated Choose Date: \n "YYYY-MM-DD" ')
-    }while(!validDate.test(updatedChooseDate))
-
-
-    // CREATED NEW OBJECT TO SEND TO SERVER TO REPLACE OR MODIFY
-    const updatedUserData = {
-        id: userId,
-        firstName: updatedFirstName.toUpperCase(),
-        lastName: updatedLastName.toUpperCase(),
-        mobileNumber: updatedMobileNumber,
-        emailId: updatedEmailId,
-        modelName: updatedModelName.toUpperCase(),
-        serviceType: updatedServiceType.toUpperCase(),
-        chooseDate: updatedChooseDate,
-    };
-
-    //SEND PUT REQUEST TO URL /MODIFYUSER
-    fetch(`/modifyUser/${userId}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updatedUserData),//CONVERTED TO JSON FORMAT
-    })
-    .then(response => { //NOW DATA MODIFIED AND SERVER GIVE THE RESPONSE
-        if (response.status === 200) {
-            console.log('User data updated successfully.');
-            alert("USER DATA MODIFIED")
-            window.location.href='/tableView'//JUST RELOADED THE TABLE PAGE
-            
-        } else {
-            console.log('Error updating user data:', response.status, response.statusText);
-        }
-    });
-}
-
-
-            
-
-    //DELETING FUNCTION
-        function deleteUser(userId) {
-            fetch('/deleteUser/' + userId,{//PASSED ID NUMBER IN DELETE METHORD,WE CAN ALSO PASS ID LIKE THIS
-            method:'DELETE'      
 
             })
-            .then(response => {
-                if(response.status==200){
-                    alert("User Details Successfully DELETED")
-                      window.location.href='/tableView'
-                }else {
-                    console.log("error to delete,bad response");
+
+            .catch(error => console.error("error in geting the data"))
+
+
+        //FUNCTION FOR MODIFY
+        function modifyUser(userId) {
+            document.querySelector(".edit").style.display = "block"
+            document.querySelector("#FIRSTNAME").value = document.getElementsByClassName("fname")[userId - 1].textContent//EACH TIME TABLE CREATRE CRSPND TO USER ,SO CALSSES ARE CREATED WITH SAME NAME SO WE WANT TO SELECT AS ARRAY,INDEX TOOK ALREADY LENGTH +1 ,SO HERE -1
+            document.querySelector("#LASTNAME").value = document.getElementsByClassName("lname")[userId - 1].textContent
+            document.querySelector("#NUMBER").value = document.getElementsByClassName("mnumber")[userId - 1].textContent
+            document.querySelector("#MAIL").value = document.getElementsByClassName("mail")[userId - 1].textContent
+            document.querySelector("#MODELNAME").value = document.getElementsByClassName("model")[userId - 1].textContent
+            document.querySelector("#TYPE").value = document.getElementsByClassName("service")[userId - 1].textContent
+            document.querySelector("#DATE").value = document.getElementsByClassName("dateTaken")[userId - 1].textContent
+
+            document.querySelector("#submitEdit").addEventListener("click", () => {
+                let firstName = document.querySelector("#FIRSTNAME").value
+                let lastName = document.querySelector("#LASTNAME").value
+                let mobileNumber = document.querySelector("#NUMBER").value
+                let emailId = document.querySelector("#MAIL").value
+                let modelName = document.querySelector("#MODELNAME").value
+                let serviceType = document.querySelector("#TYPE").value
+                let chooseDate = document.querySelector("#DATE").value
+
+                let isFirstNameValid = firstName.length >= 2 && firstName.trim() !== "" && isNaN(firstName);//REMOVE WHITE SPACE AND GIVE A STRING AND THAT REMAIN STRING SHOULD NOT EMPTY
+                let isLastNameValid = lastName.length >= 1 && lastName.trim() !== "" && isNaN(lastName);
+                let isMobileNumberValid = /^\d{10}$/.test(mobileNumber);;
+                let isEmailIdValid = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(emailId); // Basic email format
+                let isModelNameValid = modelName !== "";
+                let isServiceTypeValid = serviceType !== "";
+                let isChooseDateValid = /^\d{4}-\d{2}-\d{2}$/.test(chooseDate)
+
+                if (!isFirstNameValid || !isLastNameValid || !isMobileNumberValid || !isModelNameValid || !isServiceTypeValid || !isChooseDateValid) {
+            
+
+                    if (!isFirstNameValid) {
+                        document.querySelector("#firstNameError").innerHTML = "Minimum 2 Letters Required "
+                    } else {
+                        document.querySelector("#firstNameError").innerHTML = ""
+                    }
+                    if (!isLastNameValid) {
+                        document.querySelector("#lastNameError").innerHTML = "Minimum 1 Letter Required"
+                    } else {
+                        document.querySelector("#lastNameError").innerHTML = ""
+                    }
+                    if (!isMobileNumberValid) {
+                        document.querySelector("#mobileNumberError").innerHTML = "10 Digits Required"
+                    } else {
+                        document.querySelector("#mobileNumberError").innerHTML = ""
+                    } if (!isChooseDateValid) {
+                        document.querySelector("#chooseDateError").innerHTML = "Choose The Correct Date"
+                    } else {
+                        document.querySelector("#chooseDateError").innerHTML = ""
+                    }
+                    if (!isEmailIdValid) {
+                        document.querySelector("#emailError").innerHTML = "Proper Email ID Required"
+                    } else {
+                        document.querySelector("#emailError").innerHTML = ""
+                    }
+                } else {
+
+                    const updatedUserData = {
+                        id: userId,
+                        firstName: firstName.toUpperCase(),
+                        lastName: lastName.toUpperCase(),
+                        mobileNumber: mobileNumber,
+                        emailId: emailId,
+                        modelName: modelName.toUpperCase(),
+                        serviceType: serviceType.toUpperCase(),
+                        chooseDate: chooseDate,
+                    };
+                    console.log(updatedUserData)
+                    fetch(`/modifyUser/${userId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(updatedUserData),//CONVERTED TO JSON FORMAT
+                    })
+                        .then(response => { //NOW DATA MODIFIED AND SERVER GIVE THE RESPONSE
+                            if (response.status === 200) {
+                                console.log('User data updated successfully.');
+                                alert("USER DATA MODIFIED")
+                                window.location.href = '/tableView'//JUST RELOADED THE TABLE PAGE
+
+                            } else {
+                                console.log('Error updating user data:', response.status, response.statusText);
+                            }
+                        });
+
                 }
-                
             })
-            
+
+        }
+
+
+
+
+
+        //DELETING FUNCTION
+        function deleteUser(userId) {
+            fetch('/deleteUser/' + userId, {//PASSED ID NUMBER IN DELETE METHORD,WE CAN ALSO PASS ID LIKE THIS
+                method: 'DELETE'
+
+            })
+                .then(response => {
+                    if (response.status == 200) {
+                        alert("User Details Successfully DELETED")
+                        window.location.href = '/tableView'
+                    } else {
+                        console.log("error to delete,bad response");
+                    }
+
+                })
+
         }
 
         function home() { //ADDED A BUTTON TO GO HOME
-            window.location.href='/'
-            
+            window.location.href = '/'
+
         }
 
     </script>
@@ -195,5 +304,5 @@
 
 
 </body>
-</html>
 
+</html>

@@ -84,11 +84,13 @@
             <div class="box">
                 <label for="firstName">First Name : </label>
                 <input placeholder="Must Have At least 3 Letters" type="text" name="firstName" id="firstName">
+                <br><small style="color: red;" id="firstNameError"></small>
             </div>
 
             <div class="box">
                 <label for="mobileNumber">Mobile Number : </label>
                 <input placeholder="Valid Mobile Number Required" type="number" name="mobileNumber" id="mobileNumber">
+                <br><small style="color: red;" id="mobileNumberError"></small>
             </div>
             <div class="box">
                 <label for="modelName">Model Name : </label>
@@ -103,6 +105,7 @@
             <div class="box">
                 <label for="chooseDate">Choose Date : </label>
                 <input type="date" name="chooseDate" id="chooseDate">
+                <br><small style="color: red;" id="chooseDateError"></small>
             </div>
 
         </div>
@@ -112,11 +115,13 @@
             <div class="box">
                 <label for="lastName">Last Name : </label>
                 <input placeholder="Must Have At least 1 Letter" type="text" name="lastName" id="lastName">
+                <br><small style="color: red;" id="lastNameError"></small>
             </div>
 
             <div class="box">
                 <label for="emailId">Email Id : </label>
                 <input placeholder="Valid Email ID Required" type="email" name="emailId" id="emailId">
+                <br><small style="color: red;" id="emailError"></small>
             </div>
             <div class="box">
                 <label for="serviceType">Service Type : </label>
@@ -134,7 +139,8 @@
     </div>
     <h3 style="color: red;" id="errorDisplay"></h3>
     <input id="submit" class="submit" type="button" value="Submit"> <br>
-    <input id="booking" class="booking" type="button" value="Booking History" onclick="(() =>  window.location.href = '/tableView')()">
+    <input id="booking" class="booking" type="button" value="Booking History"
+        onclick="(() =>  window.location.href = '/tableView')()">
 
 
     <!-- TABLE SECTION  -->
@@ -173,6 +179,33 @@
 
                 if (!isFirstNameValid || !isLastNameValid || !isMobileNumberValid || !isModelNameValid || !isServiceTypeValid || !isChooseDateValid) {
                     document.querySelector("#errorDisplay").innerHTML = "PLEASE COMPLETE THE FORM CORRECTLY"
+
+                    if (!isFirstNameValid) {
+                        document.querySelector("#firstNameError").innerHTML = "Minimum 2 Letters Required "
+                    } else {
+                        document.querySelector("#firstNameError").innerHTML = ""
+                    }
+                    if (!isLastNameValid) {
+                        document.querySelector("#lastNameError").innerHTML = "Minimum 1 Letter Required"
+                    } else {
+                        document.querySelector("#lastNameError").innerHTML = ""
+                    }
+                    if (!isMobileNumberValid) {
+                        document.querySelector("#mobileNumberError").innerHTML = "10 Digits Required"
+                    } else {
+                        document.querySelector("#mobileNumberError").innerHTML = ""
+                    } if (!isChooseDateValid) {
+                        document.querySelector("#chooseDateError").innerHTML = "Choose The Correct Date"
+                    } else {
+                        document.querySelector("#chooseDateError").innerHTML = ""
+                    }
+                    if (!isEmailIdValid) {
+                        document.querySelector("#emailError").innerHTML = "Proper Email ID Required"
+                    } else {
+                        document.querySelector("#emailError").innerHTML = ""
+                    }
+
+
 
                 } else {
 

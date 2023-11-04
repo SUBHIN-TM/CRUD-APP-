@@ -121,9 +121,15 @@ const server = http.createServer((req, res) => {
         console.log("user id to delete", userId);
         const users = require('./data.json'); //METHORD 1
         const upDatedUsers = users.filter(userFind => userFind.id !== userId)//NOW FILTERED THE ALL OBEJCT IN THIS VARIABLE,EXCEPT THIS ID(RECIEVED) CONTAINS
+       
+        for(var i=0;i<upDatedUsers.length;i++){
+                upDatedUsers[i].id=i+1
+              }
+
         const upDatedUsersJSON = JSON.stringify(upDatedUsers, null, 2); //CONVERTED TO JSON FORMAT
         //2 NUMBER OF SPACES,NULL MEANS NOT ALTERING DURUING CONVERTION
         //NOW upDatedUsersJSON CONTAIN DATA TO REPLEC IN DATABASE
+
 
         fs.writeFile('data.json', upDatedUsersJSON, (error) => { //READ THE DATA BASE AND OVER WRITED NEW DATABASE
             if (error) {
