@@ -167,8 +167,8 @@
                 let id = 0;
 
                 //MAKE A VARIABLE TO CONTAIN EACH FORM TRUE
-                let isFirstNameValid = firstName.length >= 2 && firstName.trim() !== "";//REMOVE WHITE SPACE AND GIVE A STRING AND THAT REMAIN STRING SHOULD NOT EMPTY
-                let isLastNameValid = lastName.length >= 1 && firstName.trim() !== "";
+                let isFirstNameValid =  /^[A-Za-z]+$/.test(firstName) && firstName.length >= 3;//only true filed contain only capital or small albhabet
+                let isLastNameValid =/^[A-Za-z]+$/.test(lastName) && lastName.length >= 1 ;
                 let isMobileNumberValid = /^\d{10}$/.test(mobileNumber);;
                 let isEmailIdValid = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(emailId); // Basic email format
                 let isModelNameValid = modelName !== "";
@@ -181,12 +181,12 @@
                     document.querySelector("#errorDisplay").innerHTML = "PLEASE COMPLETE THE FORM CORRECTLY"
 
                     if (!isFirstNameValid) {
-                        document.querySelector("#firstNameError").innerHTML = "Minimum 2 Letters Required "
+                        document.querySelector("#firstNameError").innerHTML ="Minimum 3 Letters Required /Avoid Speacial Characters "
                     } else {
                         document.querySelector("#firstNameError").innerHTML = ""
                     }
                     if (!isLastNameValid) {
-                        document.querySelector("#lastNameError").innerHTML = "Minimum 1 Letter Required"
+                        document.querySelector("#lastNameError").innerHTML = "Letter Required /Avoid Speacial Characters"
                     } else {
                         document.querySelector("#lastNameError").innerHTML = ""
                     }
@@ -251,10 +251,6 @@
 
 
             })
-
-
-
-
 
         })
 

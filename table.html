@@ -159,8 +159,7 @@
                 <td class="model">${object.modelName}</td>
                 <td class="service">${object.serviceType}</td>
                 <td class="dateTaken">${object.chooseDate}</td>
-
-                <td><button style="padding: 4px; margin-left: 24px;" onclick="modifyUser(${object.id})">MODIFY</button>
+                <td><button style="padding: 4px; margin-left: 24px;" onclick="modifyUser(${object.id},'${object.firstName}')">MODIFY</button>
                     <button style="margin-top:10px;padding: 4px;margin-left: 24px" onclick="deleteUser(${object.id})" >DELETE</button>
                     </td>
                 `;
@@ -180,9 +179,10 @@
 
 
         //FUNCTION FOR MODIFY
-        function modifyUser(userId) {
+        function modifyUser(userId,fname) {
             document.querySelector(".edit").style.display = "block"
-            document.querySelector("#FIRSTNAME").value = document.getElementsByClassName("fname")[userId - 1].textContent//EACH TIME TABLE CREATRE CRSPND TO USER ,SO CALSSES ARE CREATED WITH SAME NAME SO WE WANT TO SELECT AS ARRAY,INDEX TOOK ALREADY LENGTH +1 ,SO HERE -1
+            document.querySelector("#FIRSTNAME").value=fname
+            // document.querySelector("#FIRSTNAME").value = document.getElementsByClassName("fname")[userId - 1].textContent//EACH TIME TABLE CREATRE CRSPND TO USER ,SO CALSSES ARE CREATED WITH SAME NAME SO WE WANT TO SELECT AS ARRAY,INDEX TOOK ALREADY LENGTH +1 ,SO HERE -1
             document.querySelector("#LASTNAME").value = document.getElementsByClassName("lname")[userId - 1].textContent
             document.querySelector("#NUMBER").value = document.getElementsByClassName("mnumber")[userId - 1].textContent
             document.querySelector("#MAIL").value = document.getElementsByClassName("mail")[userId - 1].textContent
@@ -199,8 +199,8 @@
                 let serviceType = document.querySelector("#TYPE").value
                 let chooseDate = document.querySelector("#DATE").value
 
-                let isFirstNameValid = firstName.length >= 2 && firstName.trim() !== "" && isNaN(firstName);//REMOVE WHITE SPACE AND GIVE A STRING AND THAT REMAIN STRING SHOULD NOT EMPTY
-                let isLastNameValid = lastName.length >= 1 && lastName.trim() !== "" && isNaN(lastName);
+                let isFirstNameValid =/^[A-Za-z]+$/.test(firstName) && firstName.length >= 3;//REMOVE WHITE SPACE AND GIVE A STRING AND THAT REMAIN STRING SHOULD NOT EMPTY
+                let isLastNameValid =/^[A-Za-z]+$/.test(lastName) && lastName.length >= 1 ;
                 let isMobileNumberValid = /^\d{10}$/.test(mobileNumber);;
                 let isEmailIdValid = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(emailId); // Basic email format
                 let isModelNameValid = modelName !== "";
@@ -211,7 +211,7 @@
             
 
                     if (!isFirstNameValid) {
-                        document.querySelector("#firstNameError").innerHTML = "Minimum 2 Letters Required "
+                        document.querySelector("#firstNameError").innerHTML = "Minimum 3 Letters Required"
                     } else {
                         document.querySelector("#firstNameError").innerHTML = ""
                     }
